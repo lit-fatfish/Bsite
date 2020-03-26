@@ -1,9 +1,15 @@
 from django.shortcuts import render_to_response,get_object_or_404
+from django.core.paginator import Paginator
 from .models import Blog, BlogType
 
 def blog_list(request):
+    blogs_all_list = Blog.objects.all()
+    paginator = Paginator(blogs_all_list, 10) #每10页进行分页
+    page_num = request.GET.get('page', 1)   #获取url的页面参数（GET请求）
+    page_of_blogs = paginator.get_page(page_num)    #共有多少篇博客
+
     context = {}
-    context['blogs'] = Blog.objects.all()
+    context['page_of_blogs'] = page_of_blogs
     context['blog_types'] = BlogType.objects.all()
     #context['blog_count'] = Blog.objects.all().count()  #统计博客数量，然后可以直接在html中引用
     return render_to_response('blog/blog_list.html', context)

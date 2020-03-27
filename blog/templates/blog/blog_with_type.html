@@ -5,7 +5,7 @@
 <!-- {% block nav_blog_active %}active{% endblock %}  导航栏在blog_list已经激活了 -->
 
 {% block blog_list_title %}
-    <div>分类：{{ blog_type.type_name }} （一共有{{ blogs|length }}篇博客）
+    <div>分类：{{ blog_type.type_name }} 
         <a href="{% url 'blog_list' %}">查看全部博客</a>
     </div>
 {% endblock %}

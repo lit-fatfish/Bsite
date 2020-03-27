@@ -125,3 +125,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 
 ]
+
+EACH_PAGE_BLOGS_NUMBER = 7

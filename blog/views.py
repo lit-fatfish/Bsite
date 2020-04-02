@@ -36,7 +36,7 @@ def get_blog_list_common_data(request, blogs_all_list):
     context = {}
     context['blogs'] = page_of_blogs.object_list
     context['page_of_blogs'] = page_of_blogs
-    context['blog_types'] = BlogType.objects.annotate(blog_count=Count('blog')) #scan语句   
+    context['blog_types'] = BlogType.objects.annotate(blog_count=Count('blog')) #SQL语句  获取不同博客类型的数量 
     context['page_range'] = page_range
     context['blog_dates'] = blog_dates_dict
 
@@ -53,10 +53,8 @@ def blog_with_type(request, blog_type_pk):
     blog_type = get_object_or_404(BlogType, pk=blog_type_pk)
     blogs_all_list = Blog.objects.filter(blog_type=blog_type)
 
-    context['blog_types'] = BlogType.objects.all()
     context = get_blog_list_common_data(request, blogs_all_list)
-    
-
+    context['blog_types'] = BlogType.objects.all()
     return render_to_response('blog/blog_with_type.html', context)
 
 def blogs_with_date(request, year, month):

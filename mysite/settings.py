@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "blog",
+    'blog',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -126,4 +128,12 @@ STATICFILES_DIRS = [
 
 ]
 
+#media  专门保存用来上传的文件
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 配置ckeditor
+CKEDITOR_UPLOAD_PATH = 'upload/'
+
+# 自定义参数
 EACH_PAGE_BLOGS_NUMBER = 7

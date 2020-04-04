@@ -1,8 +1,10 @@
 from django.shortcuts import render_to_response,get_object_or_404
 from django.core.paginator import Paginator
-from django.db.models import Count
-from .models import Blog, BlogType
 from django.conf import settings
+from django.db.models import Count
+
+from .models import Blog, BlogType
+from read_statistics.utils import read_statistics_once_read
 
 def get_blog_list_common_data(request, blogs_all_list):
     paginator = Paginator(blogs_all_list, settings.EACH_PAGE_BLOGS_NUMBER) #每10页进行分页
@@ -52,9 +54,9 @@ def blog_with_type(request, blog_type_pk):
     context = {}
     blog_type = get_object_or_404(BlogType, pk=blog_type_pk)
     blogs_all_list = Blog.objects.filter(blog_type=blog_type)
-
+    #context['blog_types'] = BlogType.objects.all()
     context = get_blog_list_common_data(request, blogs_all_list)
-    context['blog_types'] = BlogType.objects.all()
+    
     return render_to_response('blog/blog_with_type.html', context)
 
 def blogs_with_date(request, year, month):
@@ -69,14 +71,12 @@ def blogs_with_date(request, year, month):
 
 def blog_detail(request, blog_pk):
     blog = get_object_or_404(Blog, pk=blog_pk)
-    if not request.COOKIES.get('blog_%s_read' % blog_pk):
-        blog.read_num += 1
-        blog.save()
+    read_cookie_key = read_statistics_once_read(request, blog)
 
     context = {}
     context['blog'] = blog
     context['previous_blog'] = Blog.objects.filter(created_time__gt=blog.created_time).last()   #获取前面的一篇文章（以创建的时间为准）
     context['next_blog'] = Blog.objects.filter(created_time__lt=blog.created_time).first()       #获取后面的一篇文章
     response = render_to_response('blog/blog_detail.html', context)
-    response.set_cookie('blog_%s_read' % blog_pk, 'true')
+    response.set_cookie(read_cookie_key, 'true')    #阅读cookie标记
     return response

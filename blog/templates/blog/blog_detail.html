@@ -22,7 +22,7 @@
                             {{ blog.blog_type }}
                         </a>
                     </li>
-                    <li>阅读({{ blog.read_num }})</li>
+                    <li>阅读({{ blog.get_read_num }})</li>
                     <li>发表日期：{{ blog.created_time|date:"Y-m-d" }}</li>
                     <!-- <li>最后更新时间：{{ blog.last_updated_time }}</li> -->
                 </ul>

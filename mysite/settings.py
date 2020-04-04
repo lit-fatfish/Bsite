@@ -30,16 +30,18 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
+INSTALLED_APPS = [ 
+    'django.contrib.admin',      #官方
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
-    'ckeditor',
+    'ckeditor',                 # 第三方库
     'ckeditor_uploader',
+    'blog',                     # 自己创建的
+    'read_statistics',
+    
 ]
 
 MIDDLEWARE = [

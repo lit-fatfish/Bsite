@@ -7,11 +7,47 @@
 
  {% block header_extends %}
      <link rel="stylesheet" href="{% static 'home.css' %}">
+     <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
  {% endblock  %}
 
 {% block nav_home_active %}active{% endblock %}
 
 {% block content %}
     <h3 class="home_content">欢迎访问我的网站，请随意！</h3>
-
+    <!-- 图表容器 DOM -->
+    <div id="container"></div>
+    <!-- 引入 highcharts.js -->
+    <!-- <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script> -->
+    <script>
+        // 图表配置
+        var options = {
+            chart: { type: 'line' },    //图标类型
+            title: { text: null },  // 标题
+            xAxis: {
+                categories: {{ dates|safe }},  // x 轴分类
+                tickmarkPlacement: 'on'        //刻度线位置
+            },
+            yAxis: {
+                title: { text: null }, // y 轴标题
+                labels: {enabled: false },      //关闭Y轴的刻度
+                gridLineDashStyle:'Dash',       //横线虚化
+                
+            },
+            series: [{                              // 数据列
+                name: '阅读量',                        // 数据列名
+                data: {{ read_nums }}                 // 数据
+            }],
+            plotOptions: {              //数据列
+                line: {
+                    dataLabels: {       //开启数据标签
+                        enabled: true
+                    }
+                }
+            },
+            legend: { enabled: false },     //图例，多个数据时可以区分和显示
+            credits: { enabled: false },    //版权信息
+        };
+        // 图表初始化函数
+        var chart = Highcharts.chart('container', options);
+    </script>
 {% endblock %}

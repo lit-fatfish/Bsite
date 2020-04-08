@@ -1,11 +1,13 @@
 import datetime
-from django.shortcuts import render_to_response
+from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from read_statistics.utils import get_seven_days_read_data, get_today_hot_data, get_yesterday_hot_data
 from blog.models import Blog
 from django.db.models import Sum
 from django.core.cache import cache
+from django.contrib import auth #避免login冲突，引用到上一层
+
 
 def get_week_hot_blogs():
     today = timezone.now().date()
@@ -34,5 +36,17 @@ def home(request):
     context['yesterday_hot_dat'] = get_yesterday_hot_data(blog_content_type)
     context['week_hot_dat'] = week_hot_dat
 
-    return render_to_response('home.html', context)
+    return render(request, 'home.html', context)
 
+def login(request):
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(request, username=username, password=password)
+    if user is not None:
+        auth.login(request, user)
+        # Redirect to a success page.
+        return redirect('/')    #首页
+    else:
+        # Return an 'invalid login' error message.
+       return render(request, 'error.html', {'message':'用户名或密码不正确'})
+     

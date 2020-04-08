@@ -25,7 +25,8 @@ SECRET_KEY = 'c(n__%2+#b%=#v6m-3@=8em!1pww%1k&wf3sn_5eq@c%f8l1i2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cssblog.pythonanywhere.com']
+ALLOWED_HOSTS = []
+#'cssblog.pythonanywhere.com'
 
 
 # Application definition
@@ -41,7 +42,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'blog',                     # 自己创建的
     'read_statistics',
-    
+    'comment'   
 ]
 
 MIDDLEWARE = [
@@ -64,7 +65,7 @@ TEMPLATES = [
         ],
         'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [
+            'context_processors': [             #render时候自动加上一些信息
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -125,7 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 

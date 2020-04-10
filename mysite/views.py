@@ -7,6 +7,7 @@ from blog.models import Blog
 from django.db.models import Sum
 from django.core.cache import cache
 from django.contrib import auth #避免login冲突，引用到上一层
+from django.urls import reverse
 
 
 def get_week_hot_blogs():
@@ -42,10 +43,11 @@ def login(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
     user = auth.authenticate(request, username=username, password=password)
+    referer = request.META.get('HTTP_REFERER', reverse('home')) #反向解析
     if user is not None:
         auth.login(request, user)
         # Redirect to a success page.
-        return redirect('/')    #首页
+        return redirect(referer)    #首页
     else:
         # Return an 'invalid login' error message.
        return render(request, 'error.html', {'message':'用户名或密码不正确'})

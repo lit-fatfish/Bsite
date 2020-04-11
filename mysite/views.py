@@ -8,6 +8,8 @@ from django.db.models import Sum
 from django.core.cache import cache
 from django.contrib import auth #避免login冲突，引用到上一层
 from django.urls import reverse
+from .forms import LoginForm, RegForm
+from django.contrib.auth.models import User
 
 
 def get_week_hot_blogs():
@@ -40,15 +42,40 @@ def home(request):
     return render(request, 'home.html', context)
 
 def login(request):
-    username = request.POST.get('username', '')
-    password = request.POST.get('password', '')
-    user = auth.authenticate(request, username=username, password=password)
-    referer = request.META.get('HTTP_REFERER', reverse('home')) #反向解析
-    if user is not None:
-        auth.login(request, user)
-        # Redirect to a success page.
-        return redirect(referer)    #首页
+    if request.method == 'POST':
+        # 提交数据
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            user = login_form.cleaned_data['user']
+            auth.login(request, user)
+            return redirect(request.GET.get('from',reverse('home')))    #默认回到原来地方，没有则到首页
     else:
-        # Return an 'invalid login' error message.
-       return render(request, 'error.html', {'message':'用户名或密码不正确'})
+        # 加载数据
+        login_form = LoginForm()    #不是提交时，自动创建对象以便提交
+        
+    context={}
+    context['login_form'] = login_form
+    return render(request, 'login.html', context)
      
+def register(request):
+    if request.method == 'POST':
+        # 提交数据
+        reg_form = RegForm(request.POST)
+        if reg_form.is_valid():
+            username = reg_form.cleaned_data['username']
+            email = reg_form.cleaned_data['email']
+            password = reg_form.cleaned_data['password']
+            # 创建用户
+            user = User.objects.create_user(username, email, password)
+            user.save()
+            # 登录用户
+            user = auth.authenticate(username=username, password=password)
+            auth.login(request, user)
+            return redirect(request.GET.get('from',reverse('home')))    #默认回到原来地方，没有则到首页
+    else:
+        # 加载数据
+        reg_form = RegForm()    #不是提交时，自动创建对象以便提交
+        
+    context={}
+    context['reg_form'] = reg_form
+    return render(request, 'register.html', context)    

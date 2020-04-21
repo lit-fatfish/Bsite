@@ -2,14 +2,16 @@ import datetime
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
-from read_statistics.utils import get_seven_days_read_data, get_today_hot_data, get_yesterday_hot_data
-from blog.models import Blog
 from django.db.models import Sum
 from django.core.cache import cache
 from django.contrib import auth #避免login冲突，引用到上一层
 from django.urls import reverse
-from .forms import LoginForm, RegForm
+from django.http import JsonResponse
 from django.contrib.auth.models import User
+
+from read_statistics.utils import get_seven_days_read_data, get_today_hot_data, get_yesterday_hot_data
+from blog.models import Blog
+from .forms import LoginForm, RegForm
 
 
 def get_week_hot_blogs():
@@ -57,6 +59,17 @@ def login(request):
     context['login_form'] = login_form
     return render(request, 'login.html', context)
      
+def login_for_modal(request):
+    login_form = LoginForm(request.POST)
+    data = {}
+    if login_form.is_valid():
+        user = login_form.cleaned_data['user']
+        auth.login(request, user)
+        data['status'] = 'SUCCESS'
+    else:
+        data['status'] = 'ERROR'
+    return JsonResponse(data)
+
 def register(request):
     if request.method == 'POST':
         # 提交数据

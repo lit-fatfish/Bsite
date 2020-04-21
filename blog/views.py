@@ -6,6 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from .models import Blog, BlogType
 from read_statistics.utils import read_statistics_once_read
+from mysite.forms import LoginForm
 
 def get_blog_list_common_data(request, blogs_all_list):
     paginator = Paginator(blogs_all_list, settings.EACH_PAGE_BLOGS_NUMBER) #每10页进行分页
@@ -78,6 +79,7 @@ def blog_detail(request, blog_pk):
     context['blog'] = blog
     context['previous_blog'] = Blog.objects.filter(created_time__gt=blog.created_time).last()   #获取前面的一篇文章（以创建的时间为准）
     context['next_blog'] = Blog.objects.filter(created_time__lt=blog.created_time).first()       #获取后面的一篇文章
+    context['login_form'] = LoginForm()
     response = render(request, 'blog/blog_detail.html', context)
     response.set_cookie(read_cookie_key, 'true')    #阅读cookie标记
     return response

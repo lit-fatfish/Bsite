@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'blog',                     # 自己创建的
     'read_statistics',
-    'comment'   
+    'comment',
+    'likes',   
 ]
 
 MIDDLEWARE = [

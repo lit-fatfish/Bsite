@@ -4,14 +4,11 @@ from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Sum
 from django.core.cache import cache
-from django.contrib import auth #避免login冲突，引用到上一层
 from django.urls import reverse
-from django.http import JsonResponse
-from django.contrib.auth.models import User
 
 from read_statistics.utils import get_seven_days_read_data, get_today_hot_data, get_yesterday_hot_data
 from blog.models import Blog
-from .forms import LoginForm, RegForm
+
 
 
 def get_week_hot_blogs():
@@ -43,52 +40,3 @@ def home(request):
 
     return render(request, 'home.html', context)
 
-def login(request):
-    if request.method == 'POST':
-        # 提交数据
-        login_form = LoginForm(request.POST)
-        if login_form.is_valid():
-            user = login_form.cleaned_data['user']
-            auth.login(request, user)
-            return redirect(request.GET.get('from',reverse('home')))    #默认回到原来地方，没有则到首页
-    else:
-        # 加载数据
-        login_form = LoginForm()    #不是提交时，自动创建对象以便提交
-        
-    context={}
-    context['login_form'] = login_form
-    return render(request, 'login.html', context)
-     
-def login_for_modal(request):
-    login_form = LoginForm(request.POST)
-    data = {}
-    if login_form.is_valid():
-        user = login_form.cleaned_data['user']
-        auth.login(request, user)
-        data['status'] = 'SUCCESS'
-    else:
-        data['status'] = 'ERROR'
-    return JsonResponse(data)
-
-def register(request):
-    if request.method == 'POST':
-        # 提交数据
-        reg_form = RegForm(request.POST)
-        if reg_form.is_valid():
-            username = reg_form.cleaned_data['username']
-            email = reg_form.cleaned_data['email']
-            password = reg_form.cleaned_data['password']
-            # 创建用户
-            user = User.objects.create_user(username, email, password)
-            user.save()
-            # 登录用户
-            user = auth.authenticate(username=username, password=password)
-            auth.login(request, user)
-            return redirect(request.GET.get('from',reverse('home')))    #默认回到原来地方，没有则到首页
-    else:
-        # 加载数据
-        reg_form = RegForm()    #不是提交时，自动创建对象以便提交
-        
-    context={}
-    context['reg_form'] = reg_form
-    return render(request, 'register.html', context)    

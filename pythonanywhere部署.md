@@ -1,4 +1,4 @@
-## 申请帐号，验证邮箱
+## 申请用户名，验证邮箱
 
 ## 创建虚拟环境
 <pre><code>virtualenv --python=python3.6 venv</code></pre>

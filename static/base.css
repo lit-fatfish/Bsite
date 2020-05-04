@@ -16,3 +16,11 @@ ul.navbar-right {
 .unread-count {
     background-color: brown !important;
 }
+
+.search-form button[type="submit"] {
+    background: none;
+    border: none;
+    margin-left: -3em;
+    color: #bbb;
+}
+

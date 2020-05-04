@@ -5,6 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Sum
 from django.core.cache import cache
 from django.urls import reverse
+from django.core.paginator import Paginator
+
 
 from read_statistics.utils import get_seven_days_read_data, get_today_hot_data, get_yesterday_hot_data
 from blog.models import Blog
@@ -40,3 +42,17 @@ def home(request):
 
     return render(request, 'home.html', context)
 
+def search(request):
+    search_word = request.GET.get('wd', '')
+    search_blogs = Blog.objects.filter(title__icontains=search_word) # i不区分大小写， contain 包含部分内容，不需要完全匹配
+
+    # 分页
+    paginator = Paginator(search_blogs, 10) #每10页进行分页
+    page_num = request.GET.get('page', 1)   #获取url的页面参数（GET请求）
+    page_of_blogs = paginator.get_page(page_num)    #共有多少篇博客
+
+    context = {}
+    context['search_word'] = search_word
+    context['search_blogs_count'] = search_blogs.count()
+    context['page_of_blogs'] = page_of_blogs
+    return render(request, 'search.html', context)

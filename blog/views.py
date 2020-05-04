@@ -48,7 +48,6 @@ def get_blog_list_common_data(request, blogs_all_list):
 def blog_list(request):
     blogs_all_list = Blog.objects.all()
     context = get_blog_list_common_data(request, blogs_all_list)
-    #context['blog_count'] = Blog.objects.all().count()  #统计博客数量，然后可以直接在html中引用
     return render(request, 'blog/blog_list.html', context)
 
 def blog_with_type(request, blog_type_pk):

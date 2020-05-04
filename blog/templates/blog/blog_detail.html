@@ -84,19 +84,20 @@
                 <span>or</span>
                 <a class="btn btn-danger" href="{% url 'register' %}?from={{ request.get_full_path }}">注册</a>
                 {% endif %}
-
             </div>
+
             <div class="comment-area">
                 <h3 class="comment-area-title">评论列表</h3>
                 <div id="comment_list">
                     {% get_comment_list blog as comments %}
                     {% for comment in comments %}
-                    <div id="root_{{ comment.pk }} class=" comment" ">
-                                <span>{{ comment.user.get_nickname_or_username }}</span>
-                                <span>({{ comment.comment_time|date:"Y-m-d H:i:s" }}):</span>
-                                <div id=" comment_{{ comment.pk }}">
-                        {{ comment.text|safe }}
-                    </div>
+                        <div id="root_{{ comment.pk }} class=" comment" ">
+                            <span>{{ comment.user.get_nickname_or_username }}</span>
+                            <span>({{ comment.comment_time|date:"Y-m-d H:i:s" }}):</span>
+                            <div id="comment_{{ comment.pk }}">
+                                {{ comment.text|safe }}
+                            </div>
+                        </div>
                     <div class="like" onclick="likeChange(this, '{% get_content_type comment %}', {{ comment.pk }})">
                         <span class="glyphicon glyphicon-thumbs-up {% get_like_status comment %}"></span>
                         <span class="liked-num">{% get_like_count comment %}</span>
@@ -104,34 +105,31 @@
                     <a href="javascript:reply({{ comment.pk }})">回复</a>
 
                     {% for reply in comment.root_comment.all %}
-                    <div class="reply">
-                        <span>{{ reply.user.get_nickname_or_username }}</span>
-                        <span>({{ reply.comment_time|date:"Y-m-d H:i:s" }}):</span>
-                        <span>回复</span>
-                        <span>{{ reply.reply_to.get_nickname_or_username }}</span>
+                        <div class="reply">
+                            <span>{{ reply.user.get_nickname_or_username }}</span>
+                            <span>({{ reply.comment_time|date:"Y-m-d H:i:s" }}):</span>
+                            <span>回复</span>
+                            <span>{{ reply.reply_to.get_nickname_or_username }}</span>
 
-                        <div id="comment_{{ reply.pk }}">
-                            {{ reply.text|safe }}
+                            <div id="comment_{{ reply.pk }}">
+                                {{ reply.text|safe }}
+                            </div>
+                            <div class="like" onclick="likeChange(this, '{% get_content_type reply %}', {{ reply.pk }})">
+                                <span class="glyphicon glyphicon-thumbs-up {% get_like_status reply %}"></span>
+                                <span class="liked-num">{% get_like_count reply %}</span>
+                            </div>
+                            <a href="javascript:reply({{ reply.pk }})">回复</a>
                         </div>
-                        <div class="like" onclick="likeChange(this, '{% get_content_type reply %}', {{ reply.pk }})">
-                            <span class="glyphicon glyphicon-thumbs-up {% get_like_status reply %}"></span>
-                            <span class="liked-num">{% get_like_count reply %}</span>
-                        </div>
-                        <a href="javascript:reply({{ reply.pk }})">回复</a>
-                    </div>
                     {% endfor %}
-
-                </div>
                 {% empty %}
-                <span id="no_comment">暂无评论</span>
+                    <span id="no_comment">暂无评论</span>
                 {% endfor %}
             </div>
         </div>
 
     </div>
+</div>
 
-    </div>
-   
 </div>
 
 {% endblock  %}
@@ -175,7 +173,7 @@
         return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
     }
 
-    $("#comment_form").submit(function(){
+    $("#comment_form").submit(function () {
         //判断是否为空
         $("#comment_error").text(''); //清除错误信息
         if (CKEDITOR.instances["id_text"].document.getBody().getText().trim() == '') {
@@ -273,9 +271,9 @@
                     var liked_num = $(obj.getElementsByClassName('liked-num'));
                     liked_num.text(data['liked_num']);
                 } else {
-                    if(data['code']==400){
+                    if (data['code'] == 400) {
                         $('#login_modal').modal('show');
-                    }else{
+                    } else {
                         alert(data['message']);
                     }
                 }
@@ -286,7 +284,12 @@
         });
     }
 
- 
+    if (window.location.hash) {
+        $('html').animate({
+            scrollTop: $(window.location.hash).offset().top - 60
+        }, 500);
+    }
+
 </script>
 
 {% endblock%}

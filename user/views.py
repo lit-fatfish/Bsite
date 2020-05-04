@@ -120,7 +120,6 @@ def bind_email(request):
 def send_verification_code(request):
     email = request.GET.get('email', '')
     send_for = request.GET.get('send_for', '')
-
     data = {}
     if email != '':
         # 生成验证码
@@ -132,8 +131,6 @@ def send_verification_code(request):
         else:
             request.session[send_for] = code
             request.session['send_code_time'] = now
-
-            
             # 发送邮件
             send_mail(
                 '绑定邮箱',

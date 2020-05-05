@@ -1,1 +1,1 @@
-#default_app_config = 'comment.apps.CommentConfig'
+# default_app_config = 'my_notifications.apps.MyNotificationConfig'

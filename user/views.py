@@ -129,7 +129,7 @@ def send_verification_code(request):
         if now - send_code_time < 30:
             data['status'] = 'ERROR'
         else:
-            request.session[send_for] = code
+            request.session['send_for'] = code
             request.session['send_code_time'] = now
             # 发送邮件
             send_mail(

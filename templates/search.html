@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load comment_tags %}
+{% load likes_tags %}
 
 {% block title %}
     我的网站 | 搜索结果 
@@ -15,20 +17,41 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
+                
                 {% if search_word == '' %}
                     <h3>你没有搜索任何东西。</h3>
                     <p>你可以尝试输入点东西，例如：Django</p>
                 {% else %}
-                    <h3>搜索"{{ search_word }}", 找到{{ search_blogs_count }}个结果</h3>
-                    <hr>
-                    {% for blog in page_of_blogs %}
-                        <a href="{% url 'blog_detail' blog.pk %}">
-                            <h4>{{ blog.title }}</h4>
-                        </a>
-                        <p>{{ blog.content | striptags | truncatechars_html:30 }}</p>
-                    {% empty %}
-                        <p>没有找到任何博客，换个关键词试试吧</p>
-                    {% endfor %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <h3 class="panel-title">搜索"{{ search_word }}", 找到{{ search_blogs_count }}个结果</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% for blog in page_of_blogs %}
+                            <div class="search-blog">
+                                <a href="{% url 'blog_detail' blog.pk %}">
+                                    <h4>{{ blog.title }}</h4>
+                                </a>
+                                <p>{{ blog.content | striptags | truncatechars_html:30 }}</p>
+                                <p class="blog-info">
+                                    <span class="glyphicon glyphicon-tag"></span>
+                                    <a href="{% url 'blog_with_type' blog.blog_type.pk %}">
+                                        {{ blog.blog_type }}
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <span class="glyphicon glyphicon-time"></span>
+                                    {{ blog.created_time|date:"Y-m-d"}} &nbsp;&nbsp;
+                                    阅读({{ blog.get_read_num }}) &nbsp;&nbsp;
+                                    评论({% get_comment_count blog %}) &nbsp;&nbsp;
+                                    点赞({% get_like_count blog %}) 
+                                </p>
+                            </div>
+                            {% empty %}
+                                <p>没有找到任何博客，换个关键词试试吧</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
                 {% endif %}
             </div>
         </div>
@@ -48,8 +71,6 @@
                     </a>
                 {% endif %}
             {% endif %}
-            
-
 
         </div>
     </div>

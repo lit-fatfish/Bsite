@@ -24,3 +24,22 @@ ul.navbar-right {
     color: #bbb;
 }
 
+.search-form {
+    display: flex;
+    width: 100%;
+    margin-left: 0!important;
+}
+
+.search-form .form-group {
+    width: 100%;
+}
+
+div.search-blog:not(:last-child){
+    /* em等于一个字的宽度，根据字体的大小调节 */
+    margin-bottom: 2em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #eeeeee;
+}
+div.search-blog h3{
+    margin-top: 0.5em;
+}

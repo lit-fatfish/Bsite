@@ -93,10 +93,10 @@
                     {% get_comment_list blog as comments %}
                     {% for comment in comments %}
                         <div id="root_{{ comment.pk }} class=" comment" ">
-                            <span>{{ comment.user.get_nickname_or_username }}</span>
+                            <span class="glyphicon glyphicon-user">{{ comment.user.get_nickname_or_username }}</span>
                             <span>({{ comment.comment_time|date:"Y-m-d H:i:s" }}):</span>
                             <div id="comment_{{ comment.pk }}">
-                                {{ comment.text|safe }}
+                               <h5>{{ comment.text|safe }}</h5> 
                             </div>
                         </div>
                     <div class="like" onclick="likeChange(this, '{% get_content_type comment %}', {{ comment.pk }})">
@@ -107,13 +107,13 @@
 
                     {% for reply in comment.root_comment.all %}
                         <div class="reply">
-                            <span>{{ reply.user.get_nickname_or_username }}</span>
-                            <span>({{ reply.comment_time|date:"Y-m-d H:i:s" }}):</span>
-                            <span>回复</span>
-                            <span>{{ reply.reply_to.get_nickname_or_username }}</span>
+                            <span class="glyphicon glyphicon-user">{{ reply.user.get_nickname_or_username }}</span>
+                            <span>({{ reply.comment_time|date:"Y-m-d H:i:s" }}) </span>
+                            <span>&nbsp;回复&nbsp;</span>
+                            <span>@{{ reply.reply_to.get_nickname_or_username }}</span>
 
-                            <div id="comment_{{ reply.pk }}">
-                                {{ reply.text|safe }}
+                            <div id="comment_{{ reply.pk }}" >
+                               <h5>{{ reply.text|safe }}</h5> 
                             </div>
                             <div class="like" onclick="likeChange(this, '{% get_content_type reply %}', {{ reply.pk }})">
                                 <span class="glyphicon glyphicon-thumbs-up {% get_like_status reply %}"></span>
@@ -196,9 +196,9 @@
                     if ($('#reply_comment_id').val() == '0') {
                         //插入评论
                         var comment_html = '<div id="root_{0}" class="comment">' +
-                            '<span>{1}</span>' +
+                            '<span class="glyphicon glyphicon-user">{1}</span>' +
                             '<span>({2})：</span>' +
-                            '<div id="comment_{0}">{3}</div>' +
+                            '<div id="comment_{0}"><h5>{3}</h5></div>' +
                             '<div class="like" onclick="likeChange(this, \'{4}\', {0})">' +
                             '<span class="glyphicon glyphicon-thumbs-up"></span> ' +
                             '<span class="liked-num">0</span>' +
@@ -210,6 +210,7 @@
                         $("#comment_list").prepend(comment_html);
                     } else {
                         //插入回复
+                        console.log('插入回复执行');
                         var reply_html = '<div class="reply">' +
                             '<span>{1}</span>' +
                             '<span>({2})</span>' +

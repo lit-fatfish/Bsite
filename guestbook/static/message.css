@@ -1,0 +1,11 @@
+.message:not(:last-child){
+    /* em等于一个字的宽度，根据字体的大小调节 */
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.message-text {
+    margin-left: 1em;
+    margin-right: 1em;
+}

@@ -53,6 +53,7 @@ div.comment {
 }
 div.reply {
     margin-left: 2em;
+    margin-bottom: 0.7em;
 }
 
 div#reply_content_container {

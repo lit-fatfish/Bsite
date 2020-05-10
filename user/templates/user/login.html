@@ -4,6 +4,13 @@
 我的网站首页|登录
 {% endblock  %}
 
+{% block header_extends %}
+    <script src="https://cdn.jsdelivr.net/npm/emojione@4.0.0/lib/js/emojione.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emojione@4.0.0/extras/css/emojione.min.css"/>
+
+{% endblock  %}
+
+
 {% block nav_home_active %}active{% endblock %}
 
 {% block content %}
@@ -47,7 +54,7 @@
         </div>
         
     </div>
+
+      
 </div>
-
-
 {% endblock %}

@@ -62,10 +62,7 @@ EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']  # 授权码
 EMAIL_SUBJECT_PREFIX = '[陈少栓的博客] '
 EMAIL_USE_SSL = True  # 与SMTP服务器通信时，是否启动SSL链接(安全链接)
 
-# django-notifications-hq设置
-DJANGO_NOTIFICATIONS_CONFIG = {
-    'USE_JSONFIELD': True
-}
+
 
 ADMINS = (
     ('admin', '416983839@qq.com'),

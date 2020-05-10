@@ -107,7 +107,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_collected') 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 
@@ -148,4 +148,9 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'my_cache_table',
     }
+}
+
+# django-notifications-hq设置
+DJANGO_NOTIFICATIONS_CONFIG = {
+    'USE_JSONFIELD': True
 }

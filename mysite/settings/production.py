@@ -20,7 +20,7 @@ from .base import *
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -37,7 +37,7 @@ DATABASES = {
     }
 }
 '''
-DATABASE_PASSWORD = os.environ('DATABASE_PASSWORD')
+DATABASE_PASSWORD = os.environ['DATABASE_PASSWORD']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -58,7 +58,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 465 #腾讯云25比较容易开， 阿里云比较难开，用465
 EMAIL_HOST_USER = '416983839@qq.com'
-EMAIL_HOST_PASSWORD = os.environ('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']  # 授权码
 EMAIL_SUBJECT_PREFIX = '[陈少栓的博客] '
 EMAIL_USE_SSL = True  # 与SMTP服务器通信时，是否启动SSL链接(安全链接)
 

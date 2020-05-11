@@ -43,3 +43,18 @@ div.search-blog:not(:last-child){
 div.search-blog h3{
     margin-top: 0.5em;
 }
+
+
+div.footer {
+    margin-top: 3em;
+    background-color: #eee;
+    color:#555;
+}
+div.website-info {
+    text-align: center;
+    padding-top: 2em;
+    padding-bottom: 1.5em;
+}
+div.website-info p {
+    margin-bottom: 0;
+}

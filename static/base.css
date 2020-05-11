@@ -47,14 +47,20 @@ div.search-blog h3{
 
 div.footer {
     margin-top: 3em;
-    background-color: #eee;
+    background-color: #f8f8f8;
     color:#555;
 }
+.page-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
 div.website-info {
     text-align: center;
     padding-top: 2em;
     padding-bottom: 1.5em;
 }
 div.website-info p {
-    margin-bottom: 0;
+    margin-bottom: 0.2em;
 }

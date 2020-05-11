@@ -34,8 +34,8 @@ class RegForm(forms.Form):
                                min_length=3,
                                widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'请输入3-30位用户名'}))
     email = forms.EmailField(label='邮箱',
-                               widget=forms.EmailInput(
-                                            attrs={'class':'form-control', 'placeholder':'请输入邮箱'}))
+                               widget=forms.EmailInput(attrs={'class':'form-control', 'placeholder':'请输入邮箱'}))
+    
     verification_code = forms.CharField(
         label='验证码',
         required=False,

@@ -5,12 +5,14 @@
     我的网站 | 留言板
 {% endblock  %}
 
- {% block header_extends %}
- <link rel="stylesheet" href="{% static 'message.css' %}">
 
- {% endblock  %}
+
+{% block header_extends %}
+<link rel="stylesheet" href="{% static 'message.css' %}">
+{% endblock  %}
 
 {% block nav_guestbook_active %}active{% endblock %}
+
 
 {% block content %}
 <div class="container">
@@ -38,7 +40,7 @@
                         <p>暂无留言，来成为第一个留言脚印的人吧！</p>
                     {% endfor %}
                 </div>
-                <div class="panel-footer">Panel footer</div>
+                <div class="panel-footer">&nbsp;</div>
             </div>
 
             <!-- 分页 -->

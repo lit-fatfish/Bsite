@@ -28,6 +28,7 @@
                     {% for blog in blogs %}
                     <div class="blog">
                         <h3><a href="{% url 'blog_detail' blog.pk %}">{{ blog.title }}</a></h3>
+                        <p>&nbsp;&nbsp;{{ blog.content|striptags|truncatechars:120 }}</p>
                         <p class="blog-info">
                             <span class="glyphicon glyphicon-tag"></span>
                             <a href="{% url 'blog_with_type' blog.blog_type.pk %}">
@@ -40,7 +41,7 @@
                             评论({% get_comment_count blog %}) &nbsp;&nbsp;
                             点赞({% get_like_count blog %}) 
                         </p>
-                        <p>{{ blog.content|striptags|truncatechars:120 }}</p>
+                        
                     </div>
 
                     {% empty %}

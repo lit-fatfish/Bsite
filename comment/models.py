@@ -14,8 +14,10 @@ class Comment(models.Model):
     user = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE) #回复者
 
     root = models.ForeignKey('self', related_name="root_comment", null=True, on_delete=models.CASCADE)
-    parent = models.ForeignKey('self', related_name="parent_comment", null=True, on_delete=models.CASCADE)
-    reply_to = models.ForeignKey(User, related_name="replies", null=True, on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', related_name="parent_comment", null=True, on_delete=models.CASCADE)  #父级评论，表示你评论的上一个对象是
+    reply_to = models.ForeignKey(User, related_name="replies", null=True, on_delete=models.CASCADE) # 根级评论，就是评论了，主要用于显示
+    # 自己的理解备注
+    # 评论文章的没有root，回复评论的有root和parent
 
     def __str__(self):
         return self.text

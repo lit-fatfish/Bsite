@@ -83,7 +83,7 @@
             $(this).addClass('disabled');
             $(this).attr('disabled', true);
             var time = 30;
-            $(this).text(time + 's');
+            $(this).text(time + 's后可再次发送');
             var interval = setInterval(() => {
                 if(time <= 0){
                     clearInterval(interval);
@@ -94,7 +94,7 @@
                 }
 
                 time --;
-                $(this).text(time + 's');
+                $(this).text(time + 's后可再次发送');
             }, 1000);
         });
     </script>

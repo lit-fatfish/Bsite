@@ -47,7 +47,7 @@ class RegForm(forms.Form):
     password = forms.CharField(label='密码',
                                min_length=6,
                                widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'请输入至少6位密码'}))
-    password_again = forms.CharField(label='密码',
+    password_again = forms.CharField(label='确认密码',
                                      min_length=6,
                                      widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'请再输入一次密码'}))
     # 验证

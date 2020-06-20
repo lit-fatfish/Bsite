@@ -159,13 +159,13 @@
             });
         });
 
-    function my_special_notification_callback(data){
-        unread_count = data['unread_count'];
-        if(unread_count == 0){
-            unread_count = '';
+        function my_special_notification_callback(data){
+            unread_count = data['unread_count'];
+            if(unread_count == 0){
+                unread_count = '';
+            }
+            $('.live_notify_badge').text(unread_count);
         }
-        $('.live_notify_badge').text(unread_count);
-    }
         //窗体改变大小事件
         $(window).resize(function(){
             var body_height = $(document.body).outerHeight(true); //正文高度                
